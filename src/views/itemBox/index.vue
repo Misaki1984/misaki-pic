@@ -67,6 +67,41 @@
       </el-form-item> -->
 
     </el-form>
+
+    <el-table
+      :data="tableData"
+      height="250"
+      border
+      style="width: 100%">
+      <el-table-column
+        prop="itemName"
+        label="ItemName"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="itemCount"
+        label="Count"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="itemInfo"
+        label="ItemInfo">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="Operation"
+        width="180">
+        <template slot-scope="scope">
+          <!-- 这里需要判断【物品类型】是否可以使用 -->
+          <el-button @click="handleClick(scope.row)" type="success" size="mini">use</el-button>
+          <!-- 需要判断【物品类型】是否可以丢弃 -->
+          <el-button @click="handleClick(scope.row)" type="danger" size="mini">destroy</el-button>
+        </template>
+      </el-table-column>
+
+    </el-table>
+    
+
   </div>
 </template>
 
@@ -83,7 +118,38 @@ export default {
         type: [],
         resource: '',
         desc: ''
-      }
+      },
+      tableData: [{
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }, {
+          itemName: 'Life Potion',
+          itemCount: 10,
+          itemInfo: 'Heal 10 HP'
+        }
+      ]
+      
     }
   },
   methods: {
