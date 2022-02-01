@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '总览', icon: 'dashboard' }
     }]
   },
 
@@ -78,14 +78,34 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/team',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        name: 'Team',
+        component: () => import('@/views/team/index'),
+        meta: { title: '战队管理', icon: 'form' }
+      },
+      {
+        path: 'update',
+        name: 'UpdateTeam',
+        component: () => import('@/views/team/update'),
+        meta: { title: '编辑战队', icon: 'form' },
+        hidden: true
+      }
+    ]
+  },
+
+  {
+    path: '/game',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Game',
+        component: () => import('@/views/game/index'),
+        meta: { title: '电竞项目管理', icon: 'form' }
       }
     ]
   },

@@ -3,7 +3,7 @@
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="80px" :inline="true">
 
-      <el-form-item label="战队名称">
+      <el-form-item label="游戏名称">
         <el-input size="medium" v-model="form.name"/>
       </el-form-item>
 
@@ -13,7 +13,7 @@
   
       <el-form-item>
         <!-- <el-switch v-model="form.delivery" /> -->
-        <el-button type="primary" @click="shwoAddClubDialog" size="medium">新增</el-button>
+        <el-button type="primary" @click="shwoAddClubDialog" size="medium">新增游戏</el-button>
       </el-form-item>
 
     </el-form>
@@ -24,26 +24,29 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="itemName"
-        label="战队名"
+        prop="gameName"
+        label="游戏名"
         width="180">
       </el-table-column>
       <el-table-column
         sortable
-        prop="itemCount"
-        label="人数"
-        width="80">
+        prop="gameNumber"
+        label="游戏规模"
+        width="120">
       </el-table-column>
       <el-table-column
         sortable
-        prop="gameName"
-        label="游戏名"
+        prop="gameType"
+        label="类型"
         width="100">
       </el-table-column>
       <el-table-column
-        prop="itemInfo"
-        label="战队简介">
+        prop="gameInfo"
+        label="游戏简介">
       </el-table-column>
+
+      <!-- 成立时间 -->
+      
       <el-table-column
         fixed="right"
         label="操作"
@@ -71,46 +74,48 @@
     </div>
     
     <el-dialog
-      title="添加战队"
+      title="添加游戏"
       :visible.sync="addClubVisible"
       width="40%"
       center>
 
-      <el-form ref="addForm" :model="addForm" :rules="rules" label-width="80px" style="padding: 15px 35px 30px;">
-        <el-form-item label="战队名称" prop="clubName">
-          <el-input size="medium" maxlength="15" show-word-limit v-model="addForm.clubName" placeholder="起个帅气点的？"/>
+      <el-form ref="addGame" :model="addGame" :rules="rules" label-width="80px" style="padding: 15px 35px 30px;">
+        <el-form-item label="游戏名称" prop="gameName">
+          <el-input size="medium" maxlength="30" v-model="addGame.gameName"/>
         </el-form-item>
 
-        <el-form-item label="电竞项目" prop="game">
-          <el-select v-model="addForm.game" filterable placeholder="请选择" size="medium">
+        <el-form-item label="游戏类型" prop="gameType">
+          <!-- <el-input size="medium" maxlength="23" v-model="addGame.gameType" style="width:205px"/>
+        </el-form-item>
+        <el-form-item label="电竞项目" prop="game"> -->
+          <el-select v-model="addGame.gameType" filterable placeholder="请选择游戏类型" size="medium">
             <el-option
-              v-for="item in gameList"
-              :key="item.gameId"
-              :label="item.gameName"
-              :value="item.gameId">
+              v-for="item in gameTypeList"
+              :key="item.gameTypeId"
+              :label="item.gameTypeName"
+              :value="item.gameTypeId">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="负责人" prop="boss">
-          <el-input size="medium" maxlength="23" v-model="addForm.boss" style="width:205px"/>
+        <el-form-item label="游戏人数" prop="gameNumber">
+          <el-input-number v-model="addGame.gameNumber" @change="handleChange" :min="1" :max="200"></el-input-number>
+          <!-- <el-input size="medium" maxlength="23" v-model="addGame.gameNumber" style="width:205px"/> -->
         </el-form-item>
 
-        <el-form-item label="联系方式" prop="contact">
-          <el-input size="medium" maxlength="50" v-model="addForm.contact" placeholder="微信，手机，QQ，邮箱任一"/>
+        <el-form-item label="发行商" prop="gamePublisher">
+          <el-input size="medium" maxlength="50" v-model="addGame.gamePublisher" placeholder="如：微软，卡普空，暴雪，拳头等"/>
         </el-form-item>
 
-        <el-form-item label="战队简介">
+        <el-form-item label="游戏简介">
           <el-input type="textarea" 
             :autosize="{ minRows: 2, maxRows: 4}" 
             size="medium" maxlength="100" 
-            v-model="addForm.introduction" 
-            placeholder="战队的目标，加入条件等"/>
+            v-model="addGame.gameInfo" 
+            placeholder="游戏的主要玩法等"/>
         </el-form-item>
       
-        
-      </el-form>  
-
+      </el-form>
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false" size="medium">取 消</el-button>
@@ -135,51 +140,87 @@ export default {
         resource: '',
         desc: ''
       },
-      addForm: {
-        clubName: '',
-        game: '',
-        boss: '',
-        contact: '',
-        introduction: ''
+      addGame: {
+        gameName: '',
+        gameType: '',
+        gameNumber: '',
+        gamePublisher: '',
+        gameInfo: ''
       },
-      gameList: [
+      tableData: [
         {
           gameId: 1,
           gameName: 'CS:GO',
+          gameNumber: 12,
+          gameType: 'FPS',
+          gameInfo: '反恐精英：全球行动'
         },
         {
           gameId: 2,
           gameName: 'LOL',
+          gameNumber: 10,
+          gameType: 'RTS',
+          gameInfo: '英雄联盟'
         },
         {
           gameId: 3,
           gameName: '炉石传说',
+          gameNumber: 2,
+          gameType: 'SLG',
+          gameInfo: '即时卡牌对战'
         },
         {
           gameId: 4,
-          gameName: 'APEX',
+          gameName: '星际争霸2',
+          gameNumber: 3,
+          gameType: 'RTS',
+          gameInfo: '暴雪旗下....'
         },
         {
           gameId: 5,
           gameName: '守望先锋',
+          gameNumber: 12,
+          gameType: 'FPS',
+          gameInfo: '暴雪旗下...'
         }
       ],
-      tableData: [],
+      gameTypeList: [
+        {
+          gameTypeId: 1,
+          gameTypeName: 'MOBA'
+        },
+        {
+          gameTypeId: 2,
+          gameTypeName: 'FPS'
+        },
+        {
+          gameTypeId: 3,
+          gameTypeName: 'RTS'
+        },
+        {
+          gameTypeId: 4,
+          gameTypeName: 'FTG'
+        },
+        {
+          gameTypeId: 5,
+          gameTypeName: 'RPG'
+        },
+        {
+          gameTypeId: 6,
+          gameTypeName: 'SLG'
+        },
+      ],
       pageSize: 10,
       addClubVisible: false,
       rules: {
-        clubName: [
-          { required: true, message: '请输入战队名', trigger: 'blur' },
-          { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
+        gameName: [
+          { required: true, message: '请输入游戏名', trigger: 'blur' }
         ],
-        game: [
-          { required: true, message: '请选电竞项目', trigger: 'change' }
+        gameType: [
+          { required: true, message: '请选择游戏类型', trigger: 'change' }
         ],
-        boss: [
-          { required: true, message: '请填写负责人', trigger: 'blur' }
-        ],
-        contact: [
-          { required: true, message: '联系方式不能为空', trigger: 'blur' }
+        gameNumber: [
+          { required: true, message: '标准游戏人数', trigger: 'blur' }
         ]
       }
     }
@@ -210,21 +251,6 @@ export default {
      }
   },
   created () {
-    for (let i = 0; i < 14; i++) {
-      this.tableData.push({
-        itemName: 'IG战队',
-        itemCount: 18,
-        gameName: '炉石传说',
-        itemInfo: 'iG（Invictus Gaming）电子竞技战队成立于2011年，旗下拥有英雄联盟分部、DOTA2分部、星际争霸Ⅱ分部等。'
-      })
-    }
-    this.tableData.push({
-        itemName: 'LGD战队',
-        itemCount: 11100,
-        gameName: '英雄联盟',
-        itemInfo: '暂无'
-    })
-    
   }
 }
 </script>
