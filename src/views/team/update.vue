@@ -63,12 +63,12 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <h2>胜点：24</h2>
-      </el-col>  
+      </el-col>
       <el-col :span="12">
-        队员
+        <el-button style="margin-bottom:16px" type="primary" @click="addMember()" size="medium">添加队员</el-button>
         <el-table
           :data="tableData"
-          height="600px"
+          height="550px"
           border
           style="width: 100%">
           <el-table-column
@@ -241,28 +241,31 @@ export default {
 </script>
 <style>
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.body {
+  background-color:blueviolet;
+}
 </style>
 <style scoped>
 .el-textarea__inner {
@@ -271,5 +274,6 @@ export default {
 .line{
   text-align: center;
 }
+
 </style>
 

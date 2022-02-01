@@ -13,11 +13,11 @@
   
       <el-form-item>
         <!-- <el-switch v-model="form.delivery" /> -->
-        <el-button type="primary" @click="shwoAddTeamDialog" size="medium">新增战队</el-button>
+        <el-button type="primary" @click="showAddTeamDialog" size="medium">新增战队</el-button>
       </el-form-item>
 
     </el-form>
-
+    <!-- main table -->
     <el-table
       :data="tableData"
       height="500"
@@ -87,62 +87,21 @@
       </el-pagination>  
     </div>
     
-    <el-dialog>
-      <!-- 查看使用description -->
-    </el-dialog>      
 
-
-    <el-dialog
-      title="添加战队"
-      :visible.sync="addTeamVisible"
-      width="40%"
-      center>
-
-      <el-form ref="addForm" :model="addForm" :rules="rules" label-width="80px" style="padding: 15px 35px 30px;">
-        <el-form-item label="战队名称" prop="teamName">
-          <el-input size="medium" maxlength="15" show-word-limit v-model="addForm.teamName" placeholder="起个帅气点的？"/>
-        </el-form-item>
-
-        <el-form-item label="电竞项目" prop="game">
-          <el-select v-model="addForm.game" filterable placeholder="请选择" size="medium">
-            <el-option
-              v-for="item in gameList"
-              :key="item.gameId"
-              :label="item.gameName"
-              :value="item.gameId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="负责人" prop="teamBoss">
-          <el-input size="medium" maxlength="23" v-model="addForm.teamBoss" style="width:205px"/>
-        </el-form-item>
-
-        <el-form-item label="联系方式" prop="teamContact">
-          <el-input size="medium" maxlength="50" v-model="addForm.teamContact" placeholder="微信，手机，QQ，邮箱任一"/>
-        </el-form-item>
-
-        <el-form-item label="战队简介">
-          <el-input type="textarea" 
-            :autosize="{ minRows: 2, maxRows: 4}" 
-            size="medium" maxlength="100" 
-            v-model="addForm.teamIntroduction" 
-            placeholder="战队的目标，加入条件等"/>
-        </el-form-item>
-      
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false" size="medium">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false" size="medium">确 定</el-button>
-      </span>
-    </el-dialog>
-
+    <view-team ref="viewTeam"></view-team>
+    <add-team ref="addTeam"></add-team>
   </div>
 </template>
 
 <script>
+import addTeam from "./addTeam.vue";
+import viewTeam from "./viewTeam.vue";
+
 export default {
+  components: {
+    addTeam,
+    viewTeam
+  },
   data() {
     return {
       loading: true,
@@ -155,13 +114,6 @@ export default {
         type: [],
         resource: '',
         desc: ''
-      },
-      addForm: {
-        teamName: '',
-        game: '',
-        teamBoss: '',
-        teamContact: '',
-        teamIntroduction: ''
       },
       gameList: [
         {
@@ -188,6 +140,7 @@ export default {
       tableData: [],
       pageSize: 10,
       addTeamVisible: false,
+      viewTeamVisible: false,
       rules: {
         teamName: [
           { required: true, message: '请输入战队名', trigger: 'blur' },
@@ -249,8 +202,12 @@ export default {
         type: 'warning'
       })
     },
-    shwoAddTeamDialog() {
-      this.addTeamVisible = true;
+    showAddTeamDialog() {
+      this.$refs.addTeam.showDialog();
+    },
+    viewTeam(row) {
+      this.viewTeamVisible = true;
+      this.$refs.viewTeam.showDialog(row.teamId);
     },
     // //每页条数改变时触发 选择一页显示多少行
     //  handleSizeChange(val) {
@@ -263,14 +220,28 @@ export default {
          console.log(`当前页: ${val}`);
          this.currentPage = val;
      },
-     viewTeam() {
-
-     },
      // 编辑管理
-     updateTeam() {
-       this.$router.push({name: 'UpdateTeam', params:{teamId: '1'}});
+     updateTeam(row) {
+       this.$router.push({name: 'UpdateTeam', params:{teamId: row.teamId}});
      },
-     deleteTeam() {
+     deleteTeam(row) {
+       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+         confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        //  调接口
+        
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });          
+      });
 
      }
   },
