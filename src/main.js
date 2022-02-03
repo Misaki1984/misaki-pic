@@ -15,6 +15,7 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import gameMap from './utils/gameMap'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -39,5 +40,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  gameMap,
   render: h => h(App)
 })

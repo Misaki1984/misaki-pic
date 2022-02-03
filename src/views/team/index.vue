@@ -141,21 +141,7 @@ export default {
       pageSize: 10,
       addTeamVisible: false,
       viewTeamVisible: false,
-      rules: {
-        teamName: [
-          { required: true, message: '请输入战队名', trigger: 'blur' },
-          { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
-        ],
-        game: [
-          { required: true, message: '请选电竞项目', trigger: 'change' }
-        ],
-        teamBoss: [
-          { required: true, message: '请填写负责人', trigger: 'blur' }
-        ],
-        teamContact: [
-          { required: true, message: '联系方式不能为空', trigger: 'blur' }
-        ]
-      },
+      
       teamStatusList: [
         {
           statusId: 0,

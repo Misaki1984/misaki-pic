@@ -13,7 +13,7 @@
       <template slot="extra">
         <el-image
           style="width: 100px; height: 100px"
-          :src="team.teamAvator"></el-image>
+          :src="team.teamAvatar"></el-image>
       </template>
       <el-descriptions-item>
         <template slot="label">
@@ -65,6 +65,9 @@
         {{team.teamIntroduction}}
       </el-descriptions-item>
     </el-descriptions>
+
+    <el-divider content-position="left">最近比赛</el-divider>
+
   </el-dialog>
 </template>
 
@@ -84,7 +87,7 @@
           teamStatus: '可比赛',
           winPoint: 12,
           memberCount: 11,
-          teamAvator: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+          teamAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
         },
         
       }

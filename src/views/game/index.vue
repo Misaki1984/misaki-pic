@@ -13,7 +13,7 @@
   
       <el-form-item>
         <!-- <el-switch v-model="form.delivery" /> -->
-        <el-button type="primary" @click="shwoAddClubDialog" size="medium">新增游戏</el-button>
+        <el-button type="primary" @click="showAddGameDialog" size="medium">新增游戏</el-button>
       </el-form-item>
 
     </el-form>
@@ -52,12 +52,10 @@
         label="操作"
         width="160">
         <template slot-scope="scope">
-          <!-- 查看 -->
-          <el-button icon="el-icon-search" @click="handleClick(scope.row)" style="padding:10px 10px" size="medium"></el-button>
           <!-- 编辑-->
-          <el-button icon="el-icon-edit" @click="handleClick(scope.row)" style="padding:10px 10px" type="warning" size="medium"></el-button>
+          <el-button icon="el-icon-edit" @click="updateGame(scope.row)" style="padding:10px 10px" type="warning" size="medium"></el-button>
           <!-- 删除 -->
-          <el-button icon="el-icon-delete" @click="handleClick(scope.row)" style="padding:10px 10px" type="danger" size="medium"></el-button>
+          <el-button icon="el-icon-delete" @click="deleteGame(scope.row)" style="padding:10px 10px" type="danger" size="medium"></el-button>
         </template>
       </el-table-column>
 
@@ -73,61 +71,18 @@
       </el-pagination>  
     </div>
     
-    <el-dialog
-      title="添加游戏"
-      :visible.sync="addClubVisible"
-      width="40%"
-      center>
-
-      <el-form ref="addGame" :model="addGame" :rules="rules" label-width="80px" style="padding: 15px 35px 30px;">
-        <el-form-item label="游戏名称" prop="gameName">
-          <el-input size="medium" maxlength="30" v-model="addGame.gameName"/>
-        </el-form-item>
-
-        <el-form-item label="游戏类型" prop="gameType">
-          <!-- <el-input size="medium" maxlength="23" v-model="addGame.gameType" style="width:205px"/>
-        </el-form-item>
-        <el-form-item label="电竞项目" prop="game"> -->
-          <el-select v-model="addGame.gameType" filterable placeholder="请选择游戏类型" size="medium">
-            <el-option
-              v-for="item in gameTypeList"
-              :key="item.gameTypeId"
-              :label="item.gameTypeName"
-              :value="item.gameTypeId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="游戏人数" prop="gameNumber">
-          <el-input-number v-model="addGame.gameNumber" @change="handleChange" :min="1" :max="200"></el-input-number>
-          <!-- <el-input size="medium" maxlength="23" v-model="addGame.gameNumber" style="width:205px"/> -->
-        </el-form-item>
-
-        <el-form-item label="发行商" prop="gamePublisher">
-          <el-input size="medium" maxlength="50" v-model="addGame.gamePublisher" placeholder="如：微软，卡普空，暴雪，拳头等"/>
-        </el-form-item>
-
-        <el-form-item label="游戏简介">
-          <el-input type="textarea" 
-            :autosize="{ minRows: 2, maxRows: 4}" 
-            size="medium" maxlength="100" 
-            v-model="addGame.gameInfo" 
-            placeholder="游戏的主要玩法等"/>
-        </el-form-item>
-      
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false" size="medium">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false" size="medium">确 定</el-button>
-      </span>
-    </el-dialog>
-
+  <add-game ref="addGame"></add-game>
+  <!-- <update-game ref="updateGame"></update-game> -->
   </div>
 </template>
 
 <script>
+import addGame from './addGame.vue';
+
 export default {
+  components: {
+    addGame
+  },
   data() {
     return {
       form: {
@@ -140,13 +95,7 @@ export default {
         resource: '',
         desc: ''
       },
-      addGame: {
-        gameName: '',
-        gameType: '',
-        gameNumber: '',
-        gamePublisher: '',
-        gameInfo: ''
-      },
+      
       tableData: [
         {
           gameId: 1,
@@ -211,18 +160,7 @@ export default {
         },
       ],
       pageSize: 10,
-      addClubVisible: false,
-      rules: {
-        gameName: [
-          { required: true, message: '请输入游戏名', trigger: 'blur' }
-        ],
-        gameType: [
-          { required: true, message: '请选择游戏类型', trigger: 'change' }
-        ],
-        gameNumber: [
-          { required: true, message: '标准游戏人数', trigger: 'blur' }
-        ]
-      }
+      
     }
   },
   methods: {
@@ -235,8 +173,11 @@ export default {
         type: 'warning'
       })
     },
-    shwoAddClubDialog() {
-      this.addClubVisible = true;
+    updateGame(row) {
+      this.$refs.addGame.showDialog(row.gameId);
+    },
+    showAddGameDialog() {
+      this.$refs.addGame.showDialog();
     },
     // //每页条数改变时触发 选择一页显示多少行
     //  handleSizeChange(val) {
