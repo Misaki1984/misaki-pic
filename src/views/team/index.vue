@@ -8,12 +8,12 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="teamSearch" size="medium">检索</el-button>
+        <el-button class="blue-button" @click="teamSearch" icon="el-icon-search"></el-button>
       </el-form-item>  
   
       <el-form-item>
         <!-- <el-switch v-model="form.delivery" /> -->
-        <el-button type="primary" @click="showAddTeamDialog" size="medium">新增战队</el-button>
+        <el-button class="blue-button" @click="showAddTeamDialog" icon="el-icon-plus"></el-button>
       </el-form-item>
 
     </el-form>
@@ -21,44 +21,60 @@
     <el-table
       :data="tableData"
       height="500"
-      border
       style="width: 100%"
       v-loading="loading">
       <el-table-column
         prop="teamName"
         label="战队名"
-        width="150">
+        width="200">
       </el-table-column>
       <el-table-column
         sortable
         prop="memberCount"
         label="人数"
-        width="80">
+        width="100">
       </el-table-column>
       <el-table-column
         sortable
         prop="gameId"
         label="游戏名"
         :formatter="setGame"
-        width="100">
+        width="150">
       </el-table-column>
       
       <el-table-column
         sortable
         prop="teamCreateDate"
         label="成立时间"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        sortable
+        label="状态"
+        width="110">
+        <template slot-scope="scope">
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">{{ setStatus(scope.row) }}</el-tag>
+          </div>
+      </template>
+      </el-table-column>
+      <el-table-column
+        sortable
+        prop="gamePlayed"
+        label="比赛场次"
         width="120">
       </el-table-column>
       <el-table-column
         sortable
-        prop="teamStatus"
-        label="状态"
-        :formatter="setStatus"
-        width="90">
+        prop="winRate"
+        label="胜率"
+        width="150">
       </el-table-column>
+      
+      <!-- blank column -->
       <el-table-column
-        prop="teamIntroduction"
-        label="战队简介">
+        label=" "
+        width="150">
       </el-table-column>
 
       <el-table-column
@@ -166,14 +182,6 @@ export default {
   },
   methods: {
     setStatus(row, column) {
-      // switch (row.teamStatus) {
-      //   case 0:
-      //     return "准备中";
-      //   case 1:
-      //     return "可比赛";
-      //   default:
-      //     return "准备中";
-      // }
       return this.statusMap.get(row.teamStatus);
     },
     setGame(row, column) {
@@ -234,24 +242,17 @@ export default {
   created () {
     for (let i = 0; i < 14; i++) {
       this.tableData.push({
-        teamId: '1',
-        teamName: 'IG战队',
-        memberCount: 18,
-        gameId: 3,
+        teamId: i + 1,
+        teamName: 'IG战队' + i,
+        memberCount: Math.floor(Math.random() * 30) + 2,
+        gameId: Math.floor(Math.random() * 5) + 1, // 返回1 - 10 
         teamIntroduction: 'iG（Invictus Gaming）电子竞技战队成立于2011年，旗下拥有英雄联盟分部、DOTA2分部、星际争霸Ⅱ分部等。',
         teamCreateDate: '2014-11-05',
-        teamStatus: 0
+        teamStatus: 0,
+        gamePlayed: Math.floor(Math.random() * 30),
+        winRate: (Math.random() * 100 + '').substring(0, 5) + '%'
       })
     }
-    this.tableData.push({
-        teamId: '2',
-        teamName: 'LGD战队',
-        memberCount: 11100,
-        gameId: 2,
-        teamIntroduction: '暂无',
-        teamCreateDate: '2018-11-05',
-        teamStatus: 1
-    })
     for (let j = 0; j < this.teamStatusList.length; j++) {
       const element = this.teamStatusList[j];
       this.statusMap.set(element.statusId, element.statusName);

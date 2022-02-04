@@ -46,11 +46,9 @@
                style="width: 530px;"/>
           </el-form-item>
 
-          <el-form-item>
-            <el-button type="primary" @click="save()" size="medium">更新</el-button>
-          </el-form-item>
 
         </el-form>
+            <el-button class="blue-button" @click="save()" style="margin-left:10px">更新</el-button>
       </el-col>
       <el-col :span="4">
         <el-upload
@@ -65,11 +63,10 @@
         <h2>胜点: 24</h2>
       </el-col>
       <el-col :span="12">
-        <el-button style="margin-bottom:16px" type="primary" @click="addMember()" size="medium">添加队员</el-button>
+        <el-button style="margin-bottom:16px" class="blue-button" @click="addMember()">添加队员</el-button>
         <el-table
           :data="tableData"
           height="550px"
-          border
           style="width: 100%">
           <el-table-column
             prop="memberName"
@@ -81,7 +78,7 @@
             prop="selfPoint"
             label="个人胜点"
             width="120">
-             <template slot-scope="scope">
+            <template slot-scope="scope">
               <el-tag
                 type="primary"
                 disable-transitions>{{scope.row.selfPoint}}</el-tag>
@@ -256,6 +253,11 @@ export default {
 }
 </script>
 <style>
+.el-dialog {
+  margin-top: 8vh !important;
+  margin-bottom: 8vh !important;
+  overflow: auto;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

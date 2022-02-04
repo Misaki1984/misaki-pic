@@ -87,7 +87,7 @@
 .el-dialog--center .el-dialog__body {
   padding: 5px 25px 25px;
 }
-.el-descriptions-item__cell el-descriptions-item__label is-bordered-label {
+.el-descriptions-item__cell .el-descriptions-item__label .is-bordered-label {
   width:120px;
 }
 </style>

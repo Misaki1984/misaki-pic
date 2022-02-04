@@ -8,12 +8,12 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="clubSearch" size="medium">检索</el-button>
+        <el-button class="blue-button" @click="clubSearch" icon="el-icon-search"></el-button>
       </el-form-item>  
   
       <el-form-item>
         <!-- <el-switch v-model="form.delivery" /> -->
-        <el-button type="primary" @click="showAddGameDialog" size="medium">新增游戏</el-button>
+        <el-button class="blue-button" @click="showAddGameDialog" icon="el-icon-plus"></el-button>
       </el-form-item>
 
     </el-form>
@@ -21,7 +21,6 @@
     <el-table
       :data="tableData"
       height="500"
-      border
       style="width: 100%">
       <el-table-column
         prop="gameName"
