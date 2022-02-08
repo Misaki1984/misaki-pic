@@ -17,34 +17,34 @@
           </div>
         </div>
         
-        <div style="height:77vh;overflow-y:auto">
-          <div class="grid-content bg-purple flex-card-between" v-for="match in competitionList" :key="match.competitionId">
-            
-            <div class="flex-card card-word">
-              <img :src="match.teamRed.teamAvatar" height="64" width="64">
-              <div class="left-team">
-                <div class="team-word">{{match.teamRed.teamName}}</div>
-                <div class="record-font">{{match.teamRed.record}}</div>
-              </div>
-            </div>
-            <!-- 点击左右队伍头像，显示viewTeam的dialog -->
-            <!-- 点击时间跳转赛事详细，如果比赛进行中，则显示进行中，点击跳转到直播平台 -->
-            <a @click="gotoCompetitionDetial()" style="width: 150px">
-              <div class="center-time">
-                <div class="match-time">{{match.competitionStartDate}}</div>
-                <div class="match-game">{{match.gameName}}</div>
-              </div>  
-            </a>
-
-            <div class="flex-card card-word">
-              <div class="right-team">
-                <div class="team-word">{{match.teamBlue.teamName}}</div>
-                <div class="record-font">{{match.teamBlue.record}}</div>
-              </div>
-              <img :src="match.teamBlue.teamAvatar" height="64" width="64">
+        <!-- <div style="height:80vh;overflow-y:auto"> -->
+        <div class="grid-content bg-purple flex-card-between" v-for="match in competitionList" :key="match.competitionId">
+          
+          <div class="flex-card card-word">
+            <img :src="match.teamRed.teamAvatar" height="64" width="64">
+            <div class="left-team">
+              <div class="team-word">{{match.teamRed.teamName}}</div>
+              <div class="record-font">{{match.teamRed.record}}</div>
             </div>
           </div>
+          <!-- 点击左右队伍头像，显示viewTeam的dialog -->
+          <!-- 点击时间跳转赛事详细，如果比赛进行中，则显示进行中，点击跳转到直播平台 -->
+          <a @click="gotoCompetitionDetial()" style="width: 150px">
+            <div class="center-time">
+              <div class="match-time">{{match.competitionStartDate}}</div>
+              <div class="match-game">{{match.gameName}}</div>
+            </div>  
+          </a>
+
+          <div class="flex-card card-word">
+            <div class="right-team">
+              <div class="team-word">{{match.teamBlue.teamName}}</div>
+              <div class="record-font">{{match.teamBlue.record}}</div>
+            </div>
+            <img :src="match.teamBlue.teamAvatar" height="64" width="64">
+          </div>
         </div>
+        <!-- </div> -->
       </el-col>
       <el-col :span="12">
         
@@ -114,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
   &-container {
-    margin: 30px;
+    margin: 20px 30px 20px 30px;
   }
   &-text {
     font-size: 30px;

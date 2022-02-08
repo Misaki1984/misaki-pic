@@ -116,6 +116,19 @@ export const constantRoutes = [
       }
     ]
   },
+  
+  {
+    path: '/competition',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Competition',
+        component: () => import('@/views/competition/index'),
+        meta: { title: '赛事管理', icon: 'form' }
+      }
+    ]
+  },
 
   // {
   //   path: '/nested',
