@@ -31,8 +31,16 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
- 
-
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/apple',
+    component: () => import('@/views/apple/index'),
+    hidden: true
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -109,19 +117,6 @@ export const constantRoutes = [
         name: 'Game',
         component: () => import('@/views/game/index'),
         meta: { title: '电竞项目管理', icon: 'form' }
-      }
-    ]
-  },
-  
-  {
-    path: '/competition',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Competition',
-        component: () => import('@/views/competition/index'),
-        meta: { title: '赛事管理', icon: 'form' }
       }
     ]
   },
