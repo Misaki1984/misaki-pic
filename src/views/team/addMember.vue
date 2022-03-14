@@ -27,7 +27,7 @@
       <el-form-item label="上传头像">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://localhost:8088/file/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import * as fileApi from "@/api/file"
   export default {
     name: "addMember",
     data() {
@@ -74,6 +75,35 @@
     methods: {
       showDialog() {
         this.addMemberVisible = true
+      },
+      handleAvatarSuccess(res, file) {
+        debugger;
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        let successFlag = true;
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          successFlag = false;
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          successFlag = false;
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        // debugger;
+        // if(successFlag) {
+        return isJPG && isLt2M;
+        //   let fd = new FormData();
+        //   fd.append('file',file);//传文件
+        //   // fd.append('srid',this.aqForm.srid);//传其他参数
+        //   fileApi.uploadFile(fd);
+        //   // axios.post('/file/upload',fd).then(function(res){
+        //   //         alert('成功');
+        //   // })
+        // }
       }
     },
   }

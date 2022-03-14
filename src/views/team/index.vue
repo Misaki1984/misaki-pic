@@ -32,7 +32,7 @@
         sortable
         prop="memberCount"
         label="人数"
-        width="100">
+        width="90">
       </el-table-column>
       <el-table-column
         sortable
