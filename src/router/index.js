@@ -135,6 +135,33 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/chat',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Chat',
+        component: () => import('@/views/chat/index'),
+        meta: { title: '聊天室', icon: 'form' }
+      },
+      {
+        path: 'chatRoom',
+        name: 'ChatRoom',
+        component: () => import('@/views/chat/chatRoom'),
+        meta: { title: '聊天室', icon: 'form' },
+        hidden: true
+      },
+      {
+        path: 'createChatDialog',
+        name: 'CreateChatDialog',
+        component: () => import('@/views/chat/createChatDialog'),
+        meta: { title: '创建聊天室', icon: 'form' },
+        hidden: true
+      }
+    ]
+  },
+
   // {
   //   path: '/nested',
   //   component: Layout,

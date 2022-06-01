@@ -3,8 +3,9 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Misaki</h3>
       </div>
+<!-- <div id="testJquery">登録完了しました</div> -->
 
       <el-form-item prop="username">
         <span class="svg-container">
@@ -93,6 +94,12 @@ export default {
       },
       immediate: true
     }
+  },
+  mounted(){
+    // if (this.$("#testJquery").text() == "登録完了しました") {
+    //   this.$("#testJquery").css({'color':'red','font-weight':'bold'})
+    // }
+       //也可以使用jQuery("#testJquery").css()
   },
   methods: {
     showPwd() {
