@@ -9,11 +9,27 @@
     <meta charset="utf-8"> <!--这是设置网页编码-->
     <title>我的主页</title><!--这是设置网页标题-->
 
+    <link rel="stylesheet" type="text/css" href="../../styles/anime-rotate.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/anime-tracking-in.css">
+
     <style>
       .stro {
         font-size: 30px;
         text-align: left;
         font-weight: 800;
+      }
+      .big-text {
+        font-size: 50px;
+        font-weight: 800;
+      }
+      .rotate-hor-bottom {
+        -webkit-animation: rotate-hor-bottom 2s cubic-bezier(0.645, 0.045, 0.355, 1.000) infinite both;
+                animation: rotate-hor-bottom 2s cubic-bezier(0.645, 0.045, 0.355, 1.000) infinite both;
+                
+      }
+      .tracking-in-expand {
+        -webkit-animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite both;
+                animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite both;
       }
     </style>
   </head>
@@ -33,5 +49,51 @@
         <td style="width:200">$100</td>
       </tr>
     </table>
+
+    <div id="anime" class="tracking-in-expand big-text">社会主义核心价值观</div>
+
+    <script>
+      /**
+       * 随机生成这些功能可以提到工具类中，github上会不会有？ 
+       * 
+      */ 
+      // 随机颜色
+      function getRamdomColor1() {
+        //颜色字符串
+        var colorStr = '';
+        //字符串的每一字符的范围
+        var randomArr = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+        //产生一个六位的字符串
+        for(var i = 0; i < 6; i++){
+          //15是范围上限，0是范围下限，两个函数保证产生出来的随机数是整数
+          colorStr += randomArr[Math.ceil(Math.random() * (15 - 0) + 0)];
+        }
+        return colorStr;
+      }
+
+      function getRandomElement(arr) {
+        var index = Math.floor((Math.random() * arr.length));
+        return arr[index];
+      }
+      
+      // 一种做法是绑在一起，成为一个对象。但这个list大概率是后端返回，不能有颜色吧，所以还是内容和颜色分开
+      var list = ['富强', '民主', '文明', '和谐', '自由', '平等', '公正', '法治', '爱国', '敬业', '诚信', '友善'];
+      var colorList = ['#DC143C', '#9400D3', '#0000FF', '#008000', '#FFD700', '#FF0000', '#FFA500', '#48D1CC'];
+      var index = 0;
+      
+      var x = document.getElementById("anime");
+      // 添加监听事件
+      x.addEventListener("webkitAnimationIteration", myIterationFunction);
+      x.addEventListener("animationiteration", myIterationFunction);
+      // 监听事件, 中感觉不对，有延迟，颜色和内容不是一个整体，总是先转完再变颜色，颜色和内容应该是同时，在动画执行前。
+      function myIterationFunction() {
+        // round robin 轮询
+        var color = colorList[index++ % colorList.length];
+        var text = list[index % list.length];
+        this.innerHTML = text;
+        // 颜色固定循环
+        this.style.color = color;
+      }
+    </script>
   </body>
 </html>
